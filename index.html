@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5">
+    <title>SMART SOLAR - IoT Project</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <img class="bg-img" src="./Solar_Project_Finance_Modeling_RVI_1400x788 (1).png" alt="">
+    <header>
+        <div id="navbar">
+            <a id="logo"></a>
+            <div class="navbar-content">
+                <a href="#">Photos</a>
+                <a href="#">Videos</a>
+                <a href="#">Team Members</a>
+                <a href="#">Drive</a>
+            </div>
+        </div>
+    </header>
+
+    <h1>SMART SOLAR</h1>
+
+    <div class="main-container">
+        <div class="chart-container">
+            <h2>Voltage</h2>
+            <canvas id="chart1"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>Current</h2>
+            <canvas id="chart2"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>Power</h2>
+            <canvas id="chart3"></canvas>
+        </div>
+    </div>
+
+    <script>
+        async function fetchData(fieldNumber) {
+            const channelId = '2621783';
+            const readApiKey = 'GFEW1GYYJAGDTIJT';
+            const url = `https://api.thingspeak.com/channels/${channelId}/fields/${fieldNumber}.json?api_key=${readApiKey}&results=20`;
+
+            const response = await fetch(url);
+            const data = await response.json();
+            return data.feeds;
+        }
+
+        function createChart(chartId, labels, data, title) {
+            const ctx = document.getElementById(chartId).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: title,
+                        data: data,
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: title
+                        }
+                    }
+                }
+            });
+        }
+
+        async function renderCharts() {
+            const titles = ['Voltage', 'Current', 'Power'];
+            for (let i = 1; i <= 3; i++) {
+                const data = await fetchData(i);
+                
+                const filteredData = data.filter(feed => feed[`field${i}`] !== undefined && !isNaN(feed[`field${i}`]));
+                const labels = filteredData.map(feed => new Date(feed.created_at).toLocaleString());
+                const values = filteredData.map(feed => parseFloat(feed[`field${i}`]));
+
+                createChart(`chart${i}`, labels, values, titles[i - 1]);
+            }
+        }
+
+        renderCharts();
+    </script>
+</body>
+</html>
