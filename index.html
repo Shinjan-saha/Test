@@ -25,18 +25,20 @@
 
     <h1>SMART SOLAR</h1>
 
-    <div class="main-container">
-        <div class="chart-container">
-            <h2>Voltage</h2>
-            <canvas id="chart1"></canvas>
-        </div>
-        <div class="chart-container">
-            <h2>Current</h2>
-            <canvas id="chart2"></canvas>
-        </div>
-        <div class="chart-container">
-            <h2>Power</h2>
-            <canvas id="chart3"></canvas>
+    <div class="container">
+        <div class="main-container">
+            <div class="chart-container">
+                <h2>Voltage</h2>
+                <canvas id="chart1"></canvas>
+            </div>
+            <div class="chart-container">
+                <h2>Current</h2>
+                <canvas id="chart2"></canvas>
+            </div>
+            <div class="chart-container">
+                <h2>Power</h2>
+                <canvas id="chart3"></canvas>
+            </div>
         </div>
     </div>
 
@@ -51,10 +53,10 @@
             return data.feeds;
         }
 
-        function createChart(chartId, labels, data, title) {
+        function createChart(chartId,labels, data, title) {
             const ctx = document.getElementById(chartId).getContext('2d');
             new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
@@ -87,9 +89,10 @@
                 
                 const filteredData = data.filter(feed => feed[`field${i}`] !== undefined && !isNaN(feed[`field${i}`]));
                 const labels = filteredData.map(feed => new Date(feed.created_at).toLocaleString());
+                //console.log(labels);
                 const values = filteredData.map(feed => parseFloat(feed[`field${i}`]));
-
-                createChart(`chart${i}`, labels, values, titles[i - 1]);
+                console.log(values);
+                createChart(`chart${i}`,labels, values, titles[i - 1]);
             }
         }
 
