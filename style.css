@@ -21,7 +21,7 @@ h1 {
     font-size: 3em;
     letter-spacing: 0.5rem;
     margin: 2rem 0;
-    color: #f08804;
+    color: orange;
 }
 
 /* Navbar Styles */
@@ -124,6 +124,9 @@ canvas {
     display: block; /* Ensure canvas is displayed as a block element */
     background-color: #ffffff;
     border-radius: 8px;
+}
+.latest-value{
+    margin-top: 10px;
 }
 
 /* Grid Item Styles */
