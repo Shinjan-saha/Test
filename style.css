@@ -7,6 +7,7 @@
     font-family: 'Open Sans', sans-serif;
     /* background-color: #29343d; */
     color: #ffffff;
+    overflow: hidden;
 }
 
 /* Body and Main Title */
@@ -20,7 +21,7 @@ h1 {
     font-size: 3em;
     letter-spacing: 0.5rem;
     margin: 2rem 0;
-    color: #f08804;
+    color: orange;
 }
 
 /* Navbar Styles */
@@ -80,11 +81,14 @@ button:hover {
     background-color: #e07b00;
     transform: scale(1.05);
 }
-
+.container{
+    height: 100vh;
+    width: 100vw;
+}
 /* Main Container */
 .main-container {
-    height: 50%;
-    width: 90%;
+    height: 60%;
+    width: 100%;
     margin: 2rem auto;
     padding: 2rem;
     color: #717388;
@@ -105,7 +109,7 @@ button:hover {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     position: relative;
     width: 30%;
-    height: fit-content; /* Adjusted height for larger charts */
+    height: 100%; /* Adjusted height for larger charts */
 }
 
 .chart-container h2 {
@@ -116,10 +120,13 @@ button:hover {
 /* Chart Canvas */
 canvas {
     width: 100% !important; /* Make sure canvas takes full width */
-    height: 100% !important; /* Make sure canvas takes full height */
+    height: 80% !important; /* Make sure canvas takes full height */
     display: block; /* Ensure canvas is displayed as a block element */
     background-color: #ffffff;
     border-radius: 8px;
+}
+.latest-value{
+    margin-top: 10px;
 }
 
 /* Grid Item Styles */
